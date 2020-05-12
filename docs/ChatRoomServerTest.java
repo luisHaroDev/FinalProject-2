@@ -188,32 +188,5 @@ public class ChatRoomServerTest {
         Assert.assertEquals(roomAfter.getMessageList().get(0).getMessage(), message);
     }
 
-    /**
-     * Test for #lookForChatroomUpdate(List)
-     * @throws InterruptedException
-     */
-    @Test
-    public void testLookForChatUpdate() throws InterruptedException {
-        //prepare test data
-        List<ChatRoom> chatRooms = ChatRoomServer.loadChatRooms();
-        //update text document with new room but not chatRooms
-        String id = "id", owner = "Owner_Username";
-        ChatRoomServer.createChatRoom(id, owner);
-        //test
-        ChatRoomServer.lookForChatroomUpdate(chatRooms);
-
-        //give time to find updates in text fie and load to the list chatRooms
-        int attempts = 0;
-        while (chatRooms.size() == chatRoomsBeforeTest.size() || attempts <= MAX_ATTEMPTS) {
-            Thread.sleep(5000);
-            attempts++;
-        }
-        //check results
-        Assert.assertFalse(chatRooms.isEmpty());
-        Assert.assertEquals(chatRoomsBeforeTest.size() + 1, chatRooms.size());
-        Assert.assertEquals(id, chatRooms.get(chatRoomsBeforeTest.size()).getId());
-        Assert.assertEquals(owner, chatRooms.get(chatRoomsBeforeTest.size()).getOwner());
-        Assert.assertNotNull(chatRooms.get(chatRoomsBeforeTest.size()).getMessageList());
-        Assert.assertTrue(chatRooms.get(chatRoomsBeforeTest.size()).getMessageList().isEmpty());
-    }
+    
 }
